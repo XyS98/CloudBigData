@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.sitech.mybatis</groupId>
-	<artifactId>demo001</artifactId>
+	<groupId>com.sitech</groupId>
+	<artifactId>cloudide</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>demo001</name>
+	<name>cloudide</name>
 	<url>http://maven.apache.org</url>
 
     <parent>
@@ -41,7 +41,13 @@
     <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
+        <!--
+            <version>8.0.16</version>
+        -->
+        <version>5.1.38</version>
     </dependency>
+    
+
 <!-- Add typical dependencies for a web application -->
     <dependency>
         <groupId>org.springframework.boot</groupId>

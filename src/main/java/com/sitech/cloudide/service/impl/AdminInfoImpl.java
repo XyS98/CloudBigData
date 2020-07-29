@@ -37,4 +37,16 @@ public class AdminInfoImpl extends BaseDaoImpl implements AdminInfoService {
     public int alterName(String oldName, String newName) {
         return mapper.alterName(oldName, newName);
     }
+
+    @Override
+    public String getPhone(String phone) {
+        return mapper.getPhone(phone);        
+    }
+
+	@Override
+	public AdminInfo findById(int aid) {
+		return mapper.findById(aid);
+	}
+    
+    
 }

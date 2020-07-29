@@ -22,4 +22,10 @@ public interface AdminInfoService {
 
     // 修改用户名的方法
     public int alterName(String oldName, String newName);
+
+    // 获取手机号码
+    public String getPhone(String phone);
+
+    // 通过ID查询所有信息
+    public AdminInfo findById(int aid);
 }

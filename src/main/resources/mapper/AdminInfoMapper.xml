@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace 连接对应的数据接口Mapper类-->
-<mapper namespace="com.example.springbootdemo.bean.AdminInfo">
+<mapper namespace="com.sitech.cloudide.mapper.AdminInfoMapper">
     <!-- 登录方法， id对应Map类中的方法名字,parameterType：查询参数类型类型 returTyple:查询结果返回值类型-->
     <select id="login" parameterType="AdminInfo" resultType="AdminInfo">
         select aname,pwd,phone from adminInfo
@@ -20,4 +20,20 @@
     <update id="alterName" parameterType="AdminInfo">
         update adminInfo set aname = #{0} where aname = ${1};
     </update>
+    <!--查询收集号码-->
+    <select id="getPhone" resultType="String">
+        select phone from adminInfo where aname = #{aname};
+    </select>
+
+    <resultMap id="BaseResultMap" type="AdminInfo">
+        <result column="aid" jdbcType="INTEGER" property="aid" />
+        <result column="aname" jdbcType="VARCHAR" property="aname" />
+        <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+    </resultMap>
+ 
+    <select id="findById" resultType="AdminInfo">
+        select * from user where aid = #{aid}
+    </select>
+
 </mapper>   
