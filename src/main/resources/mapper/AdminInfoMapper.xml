@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 连接对应的数据接口Mapper类-->
+<mapper namespace="com.example.springbootdemo.bean.AdminInfo">
+    <!-- 登录方法， id对应Map类中的方法名字,parameterType：查询参数类型类型 returTyple:查询结果返回值类型-->
+    <select id="login" parameterType="AdminInfo" resultType="AdminInfo">
+        select aname,pwd,phone from adminInfo
+    </select>
+    <!--注册方法-->
+    <insert id="singUp" parameterType="AdminInfo" >
+        insert into adminInfo values（#{anme},#{pwd},#{phone}）
+    </insert>
+    <!--查询所有用户信息  -->
+    <select id="findAll" resultType="AdminInfo">
+        select aid,aname,phone from adminInfo
+    </select>
+    <!--修改用户名-->
+    <update id="alterName" parameterType="AdminInfo">
+        update adminInfo set aname = #{0} where aname = ${1};
+    </update>
+</mapper>   
