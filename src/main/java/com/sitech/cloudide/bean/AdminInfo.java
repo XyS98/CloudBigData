@@ -1,3 +1,9 @@
+/*
+ * @Descripttion: 
+ * @Author: yjb
+ * @Date: 2020-07-29 13:15:51
+ * @LastEditTime: 2020-07-30 15:01:36
+ */ 
 package com.sitech.cloudide.bean;
 
 import java.util.Objects;

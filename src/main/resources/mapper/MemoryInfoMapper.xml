@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 连接对应的数据接口Mapper类-->
+<mapper namespace="com.sitech.cloudide.mapper.MemoryInfoMapper">
+    <insert id="insertMemoryInfo" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="memID" >
+        insert into memoryInfo(linux_id,memkid,total,used,free,shared,buffORcache,available ,selectedTime)
+        values
+        <foreach collection="list" item="memoryInfo" index="index" separator=",">
+         (
+             #{memoryInfo.linux_id},
+             #{memoryInfo.memkid},
+             #{memoryInfo.total},
+             #{memoryInfo.used},
+             #{memoryInfo.free},
+             #{memoryInfo.shared},
+             #{memoryInfo.buffORcache},
+             #{memoryInfo.available},
+             #{memoryInfo.selectedTime}
+         )   
+        </foreach>
+    </insert>
+    <!-- 查询内存total,used.free信息-->
+    <select id="getLastedMemoryInfo" resultType="MemoryInfo">
+         select linux_id,total,used,free,selectedTime from lastedMemoryInfo where memkid=1;
+    </select>
+</mapper>

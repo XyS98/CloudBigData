@@ -24,16 +24,15 @@
     <select id="getPhone" resultType="String">
         select phone from adminInfo where aname = #{aname};
     </select>
-
+    <!--
     <resultMap id="BaseResultMap" type="AdminInfo">
         <result column="aid" jdbcType="INTEGER" property="aid" />
         <result column="aname" jdbcType="VARCHAR" property="aname" />
         <result column="pwd" jdbcType="VARCHAR" property="pwd" />
         <result column="phone" jdbcType="VARCHAR" property="phone" />
     </resultMap>
- 
+    -->
     <select id="findById" resultType="AdminInfo">
-        select * from user where aid = #{aid}
+        select * from adminInfo where aid = #{aid}
     </select>
-
-</mapper>   
+</mapper>

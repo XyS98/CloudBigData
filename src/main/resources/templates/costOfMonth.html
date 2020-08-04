@@ -1,0 +1,48 @@
+<!--
+ * @Descripttion: 制作一个月消费饼图
+ * @Author: yjb
+ * @Date: 2020-07-31 20:44:08
+ * @LastEditTime: 2020-07-31 22:54:55
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ECharts</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js"></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<h1>YJB's Demo</h1>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'Yjb的月消费结构'
+        },
+        series: [
+            {
+                name: '消费类型',
+                type: 'pie',                 //pie饼状图
+                data: [
+                    {value:1042, name:'餐饮'},
+                    {value:208, name:'生活服务'},
+                    {value:202, name:'娱乐'},
+                    {value:184, name:'购物'},
+                    {value:108, name:'其他'}
+                ]
+            }
+        ]
+       
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>  

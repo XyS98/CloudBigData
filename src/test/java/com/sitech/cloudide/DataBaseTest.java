@@ -1,4 +1,16 @@
+/*
+ * @Descripttion: 
+ * @Author: yjb
+ * @Date: 2020-07-29 13:15:51
+ * @LastEditTime: 2020-08-03 21:19:38
+ */
 package com.sitech.cloudide;
+
+import java.io.IOException;
+import java.util.List;
+
+import com.sitech.cloudide.bean.MemoryInfo;
+import com.sitech.cloudide.service.impl.MemoryInfoImpl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,27 +18,25 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.sitech.cloudide.service.impl.AdminInfoImpl;
-
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DataBaseTest.class)
+@SpringBootTest(classes = CloudideApplication.class)
 @MapperScan("com.sitech.cloudide.mapper")
+
 
 public class DataBaseTest {
     @Autowired(required = true)
-    private AdminInfoImpl impl;
+    private MemoryInfoImpl impl;
 
-    // @Test
-    // public void getPhone(){
-    //     // List<AdminInfo> adminInfos = impl.findAll();
-    //     // for(int i=0; i<adminInfos.size(); i++){
-    //     //     System.out.println("aname："+ adminInfos.get(i).getAname()+"\n");
-    //     //     System.out.println("pwd："+ adminInfos.get(i).getAname()+"\n");
-    //     //     System.out.println("phone："+ adminInfos.get(i).getAname()+"\n");
-    //     // }
-    //     String aname = "MrA";
-    //     String phone = impl.getPhone(aname);
-    //     System.out.println(phone);
-    // }
+    @Test
+    public void insertMemoryInfo() throws IOException {
+        String command = "free -m";
+        List<MemoryInfo> memoryInfos = impl.getMemoryInfos("192.168.6.131", "root", "root",command);
+        int result = impl.insertMemoryInfo(memoryInfos);
+        if(result == 0 ){
+            System.out.println("插入失败");
+        }else if(result == 1){
+            System.out.println("插入成功");
+        }
+    }
 }
