@@ -3,7 +3,7 @@
  * @Command free -m
  * @Author: yjb
  * @Date: 2020-08-01 13:39:24
- * @LastEditTime: 2020-08-03 21:12:48
+ * @LastEditTime: 2020-08-06 13:56:27
  */
 package com.sitech.cloudide.service;
 
@@ -15,7 +15,7 @@ import com.sitech.cloudide.bean.MemoryInfo;
 public interface MemoryInfoService {
 
     // 使用ssh工具从Linxu主机获取Memory数据
-    public List<MemoryInfo> getMemoryInfos(String ip, String username, String password,String command) throws IOException;
+    public List<MemoryInfo> getMemoryInfos(String ip, String username, String password,String command,int linux_id) throws IOException;
     
     //内存信息添加至数据库
     public int insertMemoryInfo(List<MemoryInfo> memoryInfos);
@@ -27,5 +27,5 @@ public interface MemoryInfoService {
     public MemoryInfo selectMemoryInfo();
     
     // 获取当前最新的数据
-    public MemoryInfo getLastedMemoryInfo();
+    public List<MemoryInfo> getLastedMemoryInfo();
 }

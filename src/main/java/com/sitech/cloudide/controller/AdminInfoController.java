@@ -2,21 +2,16 @@
  * @Descripttion: 
  * @Author: yjb
  * @Date: 2020-07-29 15:41:30
- * @LastEditTime: 2020-08-02 20:43:24
+ * @LastEditTime: 2020-08-04 13:26:44
  */
 package com.sitech.cloudide.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.sitech.cloudide.service.impl.AdminInfoImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import java.io.IOException;
-import java.util.List;
-
-import com.sitech.cloudide.bean.MemoryInfo;
-import com.sitech.cloudide.service.impl.AdminInfoImpl;
-import com.sitech.cloudide.service.impl.MemoryInfoImpl;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/data")
@@ -24,8 +19,8 @@ public class AdminInfoController {
 
     @Autowired
     private AdminInfoImpl adminInfoImpl;
-    @Autowired
-    private MemoryInfoImpl memoryInfoImpl;
+    // @Autowired
+    // private MemoryInfoImpl memoryInfoImpl;
 
     // @RequestMapping("findAll")
     // public List<AdminInfo> findAll(){

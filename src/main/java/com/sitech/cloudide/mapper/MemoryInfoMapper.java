@@ -2,7 +2,7 @@
  * @Descripttion: Linux主机内存信息的数据操作接口
  * @Author: yjb
  * @Date: 2020-08-01 13:50:27
- * @LastEditTime: 2020-08-03 21:13:20
+ * @LastEditTime: 2020-08-06 13:56:47
  */
 package com.sitech.cloudide.mapper;
 
@@ -25,6 +25,6 @@ public interface MemoryInfoMapper {
     public MemoryInfo selectMemoryInfo();
 
     // 获取当前最新的数据
-    public MemoryInfo getLastedMemoryInfo();
+    public List<MemoryInfo> getLastedMemoryInfo();
 
 }

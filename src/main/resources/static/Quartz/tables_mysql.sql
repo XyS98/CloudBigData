@@ -33,7 +33,7 @@ select * from  QRTZ_JOB_DETAILS;
 select * from  QRTZ_CALENDARS;
 
 
-
+use YJB;
 show databases;
 
 CREATE TABLE QRTZ_JOB_DETAILS

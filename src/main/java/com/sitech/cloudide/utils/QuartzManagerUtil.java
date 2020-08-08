@@ -21,12 +21,14 @@ import org.quartz.TriggerKey;
 import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
- 
+import org.springframework.stereotype.Component;
+
+@Component
 public class QuartzManagerUtil {
  
 	private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
-	private static String JOB_GROUP_NAME = "yjb_GropuName";
-	private static String TRIGGER_GROUP_NAME = "yjb_TiggerGroupName";
+	private static String JOB_GROUP_NAME = "MemoryInfo";
+	private static String TRIGGER_GROUP_NAME = "DEFAULT";
  
 	/**
 	 * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名

@@ -3,7 +3,7 @@
  *                   Linux命令与返回信息格式详见MemoryInfo.java
  * @Author: yjb
  * @Date: 2020-08-01 13:38:59
- * @LastEditTime: 2020-08-03 21:13:48
+ * @LastEditTime: 2020-08-06 13:56:13
  */ 
 package com.sitech.cloudide.service.impl;
 
@@ -79,15 +79,15 @@ public class MemoryInfoImpl implements MemoryInfoService {
      * @Date: 2020-08-03 15:24:26
      */
     @Override
-    public List<MemoryInfo> getMemoryInfos(String ip, String username, String password, String command)
+    public List<MemoryInfo> getMemoryInfos(String ip, String username, String password, String command,int linux_id)
             throws IOException {
         remoteShellExcuteUtil.getLinuxInfo(ip, username, password);
         String  runInfo = remoteShellExcuteUtil.exec(command);
-        return memoryAnalysis.analysisMemory(runInfo);
+        return memoryAnalysis.analysisMemory(runInfo,linux_id);
     }
 
     @Override
-    public MemoryInfo getLastedMemoryInfo() {
+    public List<MemoryInfo> getLastedMemoryInfo() {
         return memoryInfomMapper.getLastedMemoryInfo();
     }
 }

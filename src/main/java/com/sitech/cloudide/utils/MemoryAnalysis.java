@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: yjb
  * @Date: 2020-07-30 14:17:33
- * @LastEditTime: 2020-08-03 23:36:16
+ * @LastEditTime: 2020-08-06 14:53:40
  */
 package com.sitech.cloudide.utils;
 /*
@@ -36,17 +36,18 @@ public class MemoryAnalysis {
    * @return: List<MemoryInfo> 2个MemoryInfo对象
    * @throws IOException
    */
-  public List<MemoryInfo> analysisMemory(String runInfo) throws IOException {
+  public List<MemoryInfo> analysisMemory(String runInfo,int linux_id) throws IOException {
     // System.out.print(runInfo + "\n");
     List<MemoryInfo> memoryInfoList = new ArrayList<MemoryInfo>();
     MemoryInfo memoryInfo = new MemoryInfo();
     MemoryInfo swapInfo = new MemoryInfo();
     // 根据 “:” 冒号第一次切割，3份
     String mes[] = runInfo.split(":", 3);
+    System.out.println("*******使用Shell工具从Linux获取的信息*******" + "\n");
     for (String i : mes) {
       System.out.println(i.trim() + "\n");
     }
-    System.out.println("mes.length:" + mes.length);
+    // System.out.println("mes.length:" + mes.length);
     // 舍弃第一个字符串数组，将剩下两个字符串数组依据空格切分
 
     String[] mem = mes[1].split("\\s+", 7);
@@ -71,7 +72,7 @@ public class MemoryAnalysis {
     long time = date.getTime();
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
 
-    memoryInfo.setLinux_id(3001);
+    memoryInfo.setLinux_id(linux_id);
     memoryInfo.setTotal(memNum[0]);
     memoryInfo.setMemkid(1); // 添加信息种类 1 mem
     memoryInfo.setUsed(memNum[1]);
@@ -81,10 +82,12 @@ public class MemoryAnalysis {
     memoryInfo.setAvailable(memNum[5]);
     memoryInfo.setSelectedTime(currentTime);
     memoryInfoList.add(memoryInfo);
+    System.out.println("~~~~~~~~runInfo解析并存储到MemoryInfo对象~~~~~~~~"+ "\n");
     System.out.println(memoryInfo.toString());
 
     // 添加
-    swapInfo.setLinux_id(3001);
+    // swapInfo.setLinux_id(Linux_id);
+    swapInfo.setLinux_id(linux_id);
     swapInfo.setTotal(SwapNum[0]);
     swapInfo.setMemkid(2); // 添加信息种类 2 Swap
     swapInfo.setUsed(SwapNum[1]);
@@ -94,7 +97,7 @@ public class MemoryAnalysis {
     swapInfo.setAvailable(0);
     swapInfo.setSelectedTime(currentTime);
     memoryInfoList.add(swapInfo);
-    System.out.println(swapInfo.toString());
+    System.out.println(swapInfo.toString() + "\n");
 
     return memoryInfoList;
   }

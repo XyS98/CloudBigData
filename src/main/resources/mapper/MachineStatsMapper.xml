@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 连接对应的数据接口Mapper类-->
+<mapper namespace="com.sitech.cloudide.mapper.MachineStatsMapper">
+    <insert id="insertMachineStats" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="stats_id" >
+        insert into machineStats(stats_id,linux_id,ip,cpuUsage,loads,traffic,memoryUsageRatio,memoryFree,memoryAllocated,memoryTotal,selectedTime,diskUsageMap)
+        values
+        <foreach collection="list" item="machineStats" index="index" separator=",">
+         (
+             #{machineStats.stats_id},
+             #{machineStats.linux_id},
+             #{machineStats.ip},
+             #{machineStats.cpuUsage},
+             #{machineStats.loads},
+             #{machineStats.traffic},
+             #{machineStats.memoryUsageRatio},
+             #{machineStats.memoryFree},
+             #{machineStats.memoryAllocated},
+             #{machineStats.memoryTotal},
+             #{machineStats.selectedTime},
+             #{machineStats.diskUsageMap}
+         )   
+        </foreach>
+    </insert>
+</mapper>

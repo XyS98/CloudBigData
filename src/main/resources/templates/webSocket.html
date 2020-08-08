@@ -1,0 +1,155 @@
+<!--
+ * @Descripttion: 
+ * @Author: yjb
+ * @Date: 2020-08-04 13:40:17
+ * @LastEditTime: 2020-08-06 00:20:35
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js"></script>
+</head>
+<body>
+<!-- <p>操作:<div><a onclick="openSocket()">开启socket</a></div>-->
+<p>操作:<div><a onclick="closeSocket()">关闭socket</a></div> 
+<div id = "main" style="width: 1000px; height:400px ;"></div>
+
+</body>
+<script>   
+    var socket;
+    var echartsData ={};
+    // var jsonObjMsg;
+    window.onload = function openSocket(){
+        if(typeof(WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        }else{
+            console.log("您的浏览器支持WebSocket");
+            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+            // var userId = document.getElementById('userId').value;
+            // var socketUrl="ws://127.0.0.1:22599/webSocket/"+userId;
+            var socketUrl="ws://localhost:8082/webSocket/"+10;
+            console.log(socketUrl);
+            if(socket!=null){
+                socket.close();
+                socket=null;
+            }
+            socket = new WebSocket(socketUrl);
+            //打开事件
+            socket.onopen = function() {
+                console.log("websocket已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            
+            //获得消息事件
+            socket.onmessage = function(msg) {
+                var serverMsg =  msg; //WebSocket传送给前端的数据是 [Object MessageEvent]对象
+                var jsonStrMsg = serverMsg.data;// [Object MessageEvent]对象中的Json字符串，即后端发送的数据
+                console.log('后端发送的Object:');
+                console.log(serverMsg);
+                var jsonObjMsg = JSON.parse(jsonStrMsg);  // 将JSON字符串转化为对象 方便数据操作
+                var msgKeys = Object.keys(jsonObjMsg);//获取Json对象的Key值，返回一个数组
+                console.info("jsonObjMsg:");
+                console.log(jsonObjMsg);
+                console.log("Json数据的Keys:");
+                console.log(msgKeys);
+                var keys =[];
+                var values=[];
+                var count = 0;
+                for(var i=0;i<msgKeys.length;i++){  // 遍历key值，获取对应的value值
+                    // console.log(msgKeys[i])
+                    var key = msgKeys[i];          
+                    var value = jsonObjMsg[key];
+                    // console.log("key:"+ key);
+                    // console.log("value:"+ value);
+                    if(value!=0){    // 过滤数值为0的key
+                        if(key!='memID'&&key!='memkid'&&key!='linux_id'&&key!='selectedTime'&&key!='total'){// 过滤四个非图表内容
+                            keys[count] = key;
+                            values[count] = value;   
+                            count++;
+                        }
+                    }
+                }
+                
+                // console.log("value:" + value);
+                console.log("keys:"+keys);
+                console.log("valuea:"+values);
+                // 将两个数组作为值添加到echartsData对象中: echartsData{"keys":[keys],"values":values}
+                echartsData.keys=keys;
+                echartsData.values=values;
+                
+                console.log("echartsData:"); 
+                console.log(echartsData); 
+                console.log("echartsData.values:"); 
+                console.log(echartsData.values); 
+            
+                var myChart = echarts.init(document.getElementById('main'));
+                // 显示标题，图例和空的坐标轴
+                myChart.setOption({
+                title: {
+                    text: 'Linux主机内存动态数据'
+                },
+                tooltip: {},
+                legend: {
+                    data:echartsData.keys
+                },
+                xAxis: [
+                    {data:echartsData.keys}
+                ],
+                yAxis: {},
+                series: [{
+                    name: 'Linux主机内存动态数据', 
+                    type: 'bar',
+                    data: echartsData.values
+                    }
+             
+                    // axisLabel: {  
+                    //     interval:0,  // 0: 强制显示所有标签 1:间隔一个标签进行显示
+                    //     rotate:40  // 标签倾斜角度
+                    // }   
+                ]
+            });
+            };
+            
+            socket.onclose = function() {
+                console.log("websocket已关闭");
+            };
+            //发生了错误事件
+            socket.onerror = function() {
+                console.log("websocket发生了错误");
+            }
+        }
+    }
+
+    //定时器
+    // setInterval(getItem, 1000);  //每间隔两秒钟请求一次函数
+    // function getItem(){
+    //     console.log("文本之外：echartsData");
+    //     console.log(echartsData);
+    // }
+
+    
+
+
+    function closeSocket(){
+        socket.close();
+        console.log("主动关闭websocket");
+    }
+
+    function sendMessage() {
+        if(typeof(WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        }else {
+            // console.log("您的浏览器支持WebSocket");
+            var toUserId = document.getElementById('toUserId').value;
+            var contentText = document.getElementById('contentText').value;
+            var msg = '{"toUserId":"'+toUserId+'","contentText":"'+contentText+'"}';
+            console.log(msg);
+            socket.send(msg);
+        }
+    
+    }
+    </script>
+</html>

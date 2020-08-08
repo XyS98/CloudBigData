@@ -11,6 +11,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.sitech.cloudide.bean.MachineStats;
 import com.sitech.cloudide.ssh.BaseConstant;
 import com.sitech.cloudide.ssh.IllegalParamException;
@@ -101,7 +102,7 @@ public class SSHUtil {
 		                    String loadAverages = line.substring(loadAverageIndex).replace(LOAD_AVERAGE_STRING, "");
 		                    String[] loadAverageArray = loadAverages.split(",");
 		                    if (3 == loadAverageArray.length) {
-		                    	systemPerformanceEntity.setLoad(StringUtil.trimToEmpty(loadAverageArray[0]));
+		                    	systemPerformanceEntity.setLoads(StringUtil.trimToEmpty(loadAverageArray[0]));
 		                    }
 		                } else if (3 == lineNum) {
 		                    // 第三行通常是这样：
@@ -156,7 +157,8 @@ public class SSHUtil {
 	             * */
 				session.executeCommand(COMMAND_DF_LH, new LineProcessor() {
 					private Map<String, String> diskUsageMap = new HashMap<String, String>();
-					public void process(String line, int lineNum) throws Exception {
+                    String diskUsageMapStr = "";
+                    public void process(String line, int lineNum) throws Exception {
 						if(lineNum == 1) {
 							return;
 						}
@@ -165,11 +167,12 @@ public class SSHUtil {
 		                if (6 == lineArray.length) {
 		                	String diskUsage = lineArray[4];
 		                	String mountedOn = lineArray[5];
-		                	diskUsageMap.put(mountedOn, diskUsage);
-		                }
+                            diskUsageMap.put(mountedOn, diskUsage);
+                        }
+                        diskUsageMapStr = JSON.toJSONString(diskUsageMap); // 便与存入数据库
 					}
 					public void finish() {
-						systemPerformanceEntity.setDiskUsageMap(diskUsageMap);
+						systemPerformanceEntity.setDiskUsageMap(diskUsageMapStr);
 					}
 				});
 				
